@@ -3,7 +3,7 @@
     <title>noman</title>
     <link href="https://nomanabdullah.github.io/feed.xml" rel="self" />
     <link href="https://nomanabdullah.github.io" />
-    <updated>2019-04-12T01:19:30+05:30</updated>
+    <updated>2019-04-12T01:28:51+05:30</updated>
     <author>
         <name>Noman Abdullah</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://nomanabdullah.github.io/create-a-simple-http-server-using-python/"/>
         <id>https://nomanabdullah.github.io/create-a-simple-http-server-using-python/</id>
 
-        <updated>2019-04-12T01:18:04+05:30</updated>
+        <updated>2019-04-12T01:25:04+05:30</updated>
             <summary>
                 <![CDATA[
                         <img src="https://nomanabdullah.github.io/media/posts/3/maxresdefault.jpg" alt="" />
@@ -35,10 +35,9 @@
 <p>To start server (python3):</p>
 <address><code>python -m http.server</code></address>
 <p>To start server (python2):</p>
-<address><code>python -m SimpleHttpServer</code></address><address> </address><address><img src="file://C:/Users/it17155908/Documents/Publii/sites/noman/input/media/posts/2/Captuere.PNG" alt="" width="669" height="382"></address>
-<p>The server is hosted on  http://localhost:8000/ here, localhost can be replace if your device is connected to your network like http://192.168.8.100:8000/</p>
+<address><code>python -m SimpleHttpServer</code></address><address> </address><address><img src="https://nomanabdullah.github.io/media/posts/3/Captuere.PNG" alt="" width="669" height="382"></address><address><img src="file://C:/Users/it17155908/Documents/Publii/sites/noman/input/media/posts/2/Captuere.PNG" alt="" width="669" height="382"></address><address>The server is hosted on  http://localhost:8000/ here, localhost can be replace if your device is connected to your network like http://192.168.8.100:8000/</address>
 <p>Now, open your browser to access to the server.</p>
-<p><img src="file://C:/Users/it17155908/Documents/Publii/sites/noman/input/media/posts/2/Capture.PNG" alt="" width="654" height="537"></p>
+<p><img src="https://nomanabdullah.github.io/media/posts/3/Capture.PNG" alt="" width="654" height="537"></p>
 <p>This server is very effective to share your files from your pc to your phone in a local area connection.</p>
 <p><strong>NOTE: It works in both Windows and Linux.</strong></p>
             ]]>
