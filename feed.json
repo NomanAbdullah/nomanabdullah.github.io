@@ -1,0 +1,43 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "noman",
+    "description": "",
+    "home_page_url": "https://nomanabdullah.github.io",
+    "feed_url": "https://nomanabdullah.github.io/feed.json",
+    "user_comment": "",
+    "icon": "https://nomanabdullah.github.io/media/website/cooltext320795718719250.png",
+    "author": {
+        "name": "Noman Abdullah"
+    },
+    "items": [
+        {
+            "id": "https://nomanabdullah.github.io/another-test-post.html",
+            "url": "https://nomanabdullah.github.io/another-test-post.html",
+            "title": "Create A Simple HTTP Server Using Python",
+            "summary": "Hello There,It is very easy to create a http server using python. Both python2 and python3 can be used for this purpose. First, install python in your machine. Then select a directory which one will be shared in the http server. i.e. C:\\Users\\noman\\Music To change&hellip;",
+            "content_html": "<h6 id=\"mcetoc_1d86s85j10\">Hello There,</h6>\n<p>It is very easy to create a http server using python. Both python2 and python3 can be used for this purpose. </p>\n<p>First, install python in your machine. Then select a directory which one will be shared in the http server. i.e. C:\\Users\\noman\\Music</p>\n<p>To change directory:</p>\n<address><code>cd C:\\Users\\noman\\Music</code></address>\n<p>To start server (python3):</p>\n<address><code>python -m http.server</code></address>\n<p>To start server (python2):</p>\n<address><code>python -m SimpleHttpServer</code></address><address> </address><address><img src=\"https://nomanabdullah.github.io/media/posts/2/Captuere.PNG\" alt=\"\" width=\"669\" height=\"382\"></address>\n<p>The server is hosted on  http://localhost:8000/ here, localhost can be replace if your device is connected to your network like http://192.168.8.100:8000/</p>\n<p>Now, open your browser to access to the server.</p>\n<p><img src=\"https://nomanabdullah.github.io/media/posts/2/Capture.PNG\" alt=\"\" width=\"654\" height=\"537\"></p>\n<p>This server is very effective to share your files from your pc to your phone in a local area connection.</p>\n<p><strong>NOTE: It works in both Windows and Linux.</strong></p>",
+            "image": "https://nomanabdullah.github.io/media/posts/2/maxresdefault.jpg",
+            "author": {
+                "name": "Noman Abdullah"
+            },
+            "tags": [
+            ],
+            "date_published": "2019-04-11T14:35:09+05:30",
+            "date_modified": "2019-04-12T00:31:49+05:30"
+        },
+        {
+            "id": "https://nomanabdullah.github.io/welcome.html",
+            "url": "https://nomanabdullah.github.io/welcome.html",
+            "title": "Welcome",
+            "summary": "Hello, I am Noman Abdullah, a Cyber Security student. This is my first blogsite where I will be sharing my knowledge. I will be posting tutorials about lot of things based on security. Thank you for visiting my site. Best Regards... :)",
+            "content_html": "<p>Hello,</p>\n<p>I am <strong>Noman Abdullah, </strong>a Cyber Security student. This is my first blogsite where I will be sharing my knowledge. I will be posting tutorials about lot of things based on security.</p>\n<p>Thank you for visiting my site.</p>\n<p>Best Regards... :)</p>",
+            "author": {
+                "name": "Noman Abdullah"
+            },
+            "tags": [
+            ],
+            "date_published": "2019-04-09T12:08:56+05:30",
+            "date_modified": "2019-04-11T23:42:09+05:30"
+        }
+    ]
+}

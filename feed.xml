@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>noman</title>
+    <link href="https://nomanabdullah.github.io/feed.xml" rel="self" />
+    <link href="https://nomanabdullah.github.io" />
+    <updated>2019-04-12T01:03:15+05:30</updated>
+    <author>
+        <name>Noman Abdullah</name>
+    </author>
+    <id>https://nomanabdullah.github.io</id>
+
+    <entry>
+        <title>Create A Simple HTTP Server Using Python</title>
+        <author>
+            <name>Noman Abdullah</name>
+        </author>
+        <link href="https://nomanabdullah.github.io/another-test-post.html"/>
+        <id>https://nomanabdullah.github.io/another-test-post.html</id>
+
+        <updated>2019-04-12T00:31:49+05:30</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://nomanabdullah.github.io/media/posts/2/maxresdefault.jpg" alt="" />
+                    Hello There,It is very easy to create a http server using python. Both python2 and python3 can be used for this purpose. First, install python in your machine. Then select a directory which one will be shared in the http server. i.e. C:\Users\noman\Music To change&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://nomanabdullah.github.io/media/posts/2/maxresdefault.jpg" alt="" />
+                <h6 id="mcetoc_1d86s85j10">Hello There,</h6>
+<p>It is very easy to create a http server using python. Both python2 and python3 can be used for this purpose. </p>
+<p>First, install python in your machine. Then select a directory which one will be shared in the http server. i.e. C:\Users\noman\Music</p>
+<p>To change directory:</p>
+<address><code>cd C:\Users\noman\Music</code></address>
+<p>To start server (python3):</p>
+<address><code>python -m http.server</code></address>
+<p>To start server (python2):</p>
+<address><code>python -m SimpleHttpServer</code></address><address> </address><address><img src="https://nomanabdullah.github.io/media/posts/2/Captuere.PNG" alt="" width="669" height="382"></address>
+<p>The server is hosted on  http://localhost:8000/ here, localhost can be replace if your device is connected to your network like http://192.168.8.100:8000/</p>
+<p>Now, open your browser to access to the server.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/2/Capture.PNG" alt="" width="654" height="537"></p>
+<p>This server is very effective to share your files from your pc to your phone in a local area connection.</p>
+<p><strong>NOTE: It works in both Windows and Linux.</strong></p>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>Welcome</title>
+        <author>
+            <name>Noman Abdullah</name>
+        </author>
+        <link href="https://nomanabdullah.github.io/welcome.html"/>
+        <id>https://nomanabdullah.github.io/welcome.html</id>
+
+        <updated>2019-04-11T23:42:09+05:30</updated>
+            <summary>
+                <![CDATA[
+                    Hello, I am Noman Abdullah, a Cyber Security student. This is my first blogsite where I will be sharing my knowledge. I will be posting tutorials about lot of things based on security. Thank you for visiting my site. Best Regards... :)
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>Hello,</p>
+<p>I am <strong>Noman Abdullah, </strong>a Cyber Security student. This is my first blogsite where I will be sharing my knowledge. I will be posting tutorials about lot of things based on security.</p>
+<p>Thank you for visiting my site.</p>
+<p>Best Regards... :)</p>
+            ]]>
+        </content>
+    </entry>
+</feed>
