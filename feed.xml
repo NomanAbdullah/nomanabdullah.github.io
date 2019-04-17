@@ -3,12 +3,61 @@
     <title>noman</title>
     <link href="https://nomanabdullah.github.io/feed.xml" rel="self" />
     <link href="https://nomanabdullah.github.io" />
-    <updated>2019-04-12T01:28:51+05:30</updated>
+    <updated>2019-04-17T19:54:10+05:30</updated>
     <author>
         <name>Noman Abdullah</name>
     </author>
     <id>https://nomanabdullah.github.io</id>
 
+    <entry>
+        <title>Squid Proxy Server on CentOS 7 With Web Caching</title>
+        <author>
+            <name>Noman Abdullah</name>
+        </author>
+        <link href="https://nomanabdullah.github.io/squid-proxy-server-on-centos-7-with-web-caching/"/>
+        <id>https://nomanabdullah.github.io/squid-proxy-server-on-centos-7-with-web-caching/</id>
+
+        <updated>2019-04-17T19:54:02+05:30</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://nomanabdullah.github.io/media/posts/5/install-squid-proxy-server.jpg" alt="" />
+                    Hello Good People, In this post I am going to guide you to install and configure Squid proxy server on CentOS 7. Here, You will be able to use this proxy server for web caching as well. First, squid package should be installed using following&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://nomanabdullah.github.io/media/posts/5/install-squid-proxy-server.jpg" alt="" />
+                <p><strong>Hello Good People,</strong><br>In this post I am going to guide you to install and configure Squid proxy server on CentOS 7. Here, You will be able to use this proxy server for web caching as well.</p>
+<p>First, squid package should be installed using following command:</p>
+Only Squid package: <br><address><code>#yum install squid</code></address>or<br>Squid with additional packages:<br><address><code>#yum install squid httpd-tools</code></address><address><img src="https://nomanabdullah.github.io/media/posts/5/001.png" alt="" width="818" height="480"></address>
+<p>Now, you have to start Squid server and check the status using those commands:</p>
+<address><code>#systemctl start squid</code></address><address><code>#systemctl status squid</code></address><address><img src="https://nomanabdullah.github.io/media/posts/5/002.png" alt="" width="820" height="534"></address>
+<p>Check the IP address of the server and configure it to a browser to check whether it's working or not. Here, Firefox is used.</p>
+<address><img src="https://nomanabdullah.github.io/media/posts/5/003.png" alt="" width="1358" height="734"></address>
+<p>Now, try to visit some website using the browser. If you can access to any website, proxy server works. If firewall is active in your server, you may get erorr. To get rid of it, you may use following commands:</p>
+<address><code>#systemctl status firwalld</code></address><address><code>#firewall-cmd --permanent --add-service=squid</code></address><address><code>or</code></address><address><code>#firewall-cmd --permanent --add-service=3128/tcp</code></address><address> </address><address><code>#firewall-cmd --reload</code></address><address><img src="https://nomanabdullah.github.io/media/posts/5/04.png" alt="" width="756" height="437"></address>
+<p>Now, try to browse agian. you can check the access log file to get some information.</p>
+<address><code>#cat /var/log/squid/access.log</code></address><address><img src="https://nomanabdullah.github.io/media/posts/5/004.png" alt="" width="809" height="329"></address>
+<p>To configure <strong>Web Caching</strong> in Squid proxy server, you have to edit <em>squid.conf</em> file. open the file using following command:</p>
+<address><code>#vim /etc/squid/squid.conf</code></address>
+<p>find the below line of <em><span style="text-decoration: underline;"># uncomment and adjust the following to add a disk cache directory.</span></em> this line and edit.</p>
+<address><code>cache_dir ufs /var/cache/squid 200 16 256</code></address><address class="msg msg--highlight ">If squid folder is not available in cache directory, you have to manually create it. And here, 200 is size of the disk; its 200MB, 16 is for level 1 directory and 256 is level 2 directory which is going to be created inside level 1 directory.</address>
+<p>Refresh pattern should be modified as following:</p>
+<address><code>refresh_pattern .*\(xml|html|htm|php|txt|css|js|jsp|asp):    10080    50%    43200</code></address><address><img src="https://nomanabdullah.github.io/media/posts/5/005.png" alt="" width="814" height="612"></address>
+<p>Now, try to restart the proxy server and check server status using following commands:</p>
+<address><code>#systemctl stop squid</code></address><address><code>#systemctl start squid</code></address><address><code>#systemctl status squid</code></address><address><img src="https://nomanabdullah.github.io/media/posts/5/006.png" alt="" width="812" height="576"></address>
+<p>If you get any error to start the Squid proxy server, you have to change the directory user and permission.</p>
+<address><code>#cat /etc/passwd | grep squid</code></address><address><code>#chown -R squid:squid /var/cache/</code></address><address class="msg msg--highlight ">First, we are finding squid user from passwd file. Then we are changing cache/ directory owner to squid recursively (-R)</address><address><img src="https://nomanabdullah.github.io/media/posts/5/07.png" alt="" width="434" height="228"></address>
+<p>Now, try to restart the server, it will work. After setting up all those, it's time to check the cache directories.<img src="https://nomanabdullah.github.io/media/posts/5/007.png" alt="" width="765" height="328"></p>
+<p>Well done! Level 1 has 16 directories and each of level 1 has 256 directories. Let's visit some websites from configured the browsers again. Make sure you have internet connectivity. Now, check the cache log using following command:</p>
+<address><code># tail /var/log/squid/cache.log</code></address><address><img src="https://nomanabdullah.github.io/media/posts/5/008.png" alt="" width="552" height="213"></address>
+<p>This means your web caching just started working. Now, turn off the internet connectivity and try to browser same website again. Due to having cache enabled in your proxy server, you will be able to visit those previouly visited website without internet.</p>
+<address><img src="https://nomanabdullah.github.io/media/posts/5/009.png" alt="" width="1364" height="738"></address>
+<p>If you came upto now, <strong>Congratulations! </strong>you have just configured Squid proxy server with web caching successfully.<br><br><strong>Thank you</strong> for reading my blog.</p>
+<address id="mcetoc_1d8lmcpem0"> </address><address id="mcetoc_1d8lmcpem0"> </address>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Create A Simple HTTP Server Using Python</title>
         <author>
