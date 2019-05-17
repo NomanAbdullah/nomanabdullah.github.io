@@ -3,12 +3,122 @@
     <title>noman</title>
     <link href="https://nomanabdullah.github.io/feed.xml" rel="self" />
     <link href="https://nomanabdullah.github.io" />
-    <updated>2019-04-17T19:54:10+05:30</updated>
+    <updated>2019-05-17T21:09:42+05:30</updated>
     <author>
         <name>Noman Abdullah</name>
     </author>
     <id>https://nomanabdullah.github.io</id>
 
+    <entry>
+        <title>CSRF - Double Submit Cookie Pattern</title>
+        <author>
+            <name>Noman Abdullah</name>
+        </author>
+        <link href="https://nomanabdullah.github.io/csrf-double-submit-cookie-pattern/"/>
+        <id>https://nomanabdullah.github.io/csrf-double-submit-cookie-pattern/</id>
+
+        <updated>2019-05-17T21:02:15+05:30</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://nomanabdullah.github.io/media/posts/7/final2.jpg" alt="" />
+                    Hello Visitors, In my previous post, Synchronizer Token Pattern has been explained with a sample web application which is one of the solutions to prevent Cross-Site Request Forgery attack. In this post, another solution called Double Submit Cookie Pattern (DSCP) is going to be explained with a sample&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://nomanabdullah.github.io/media/posts/7/final2.jpg" alt="" />
+                <p><strong>Hello Visitors,</strong></p>
+<p>In my previous post, <em><a href="#INTERNAL_LINK#/post/6" target="_blank" rel="nofollow noopener noreferrer">Synchronizer Token Pattern</a></em> has been explained with a sample web application which is one of the solutions to prevent Cross-Site Request Forgery attack.</p>
+<p>In this post, another solution called Double Submit Cookie Pattern (DSCP) is going to be explained with a sample web application project.</p>
+<p><strong>Double Submit Cookie Pattern (DSCP)</strong></p>
+<p>This method can be defined as sending a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value are equal.</p>
+<p><strong>How it works?</strong></p>
+<p class="graf graf--p graf-after--p">When a valid user logs in a site, the site generates a session identifier and set a cookie in the browser. Meanwhile, the site generates the cryptographically strong random value or the token for the session and set this as a cookie on the user's browser and that is distinguished from the session id. Since the server doesn't need to save the value in its end, the pattern is also called stateless <strong>CSRF</strong> defence.</p>
+<p class="graf graf--p graf-after--p">Following that, the site requires every request to include this random value as a hidden value or another request parameter. For this reason, an attacker is not able to read any data transmitted from the server or modify the cookie values.</p>
+<p class="graf graf--p graf-after--p">For this scenario, the mitigation method is to retrive the <strong>CSRF</strong> cookie from the response and add it into a special header to all the requests.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/7/002.png" alt="" width="803" height="437"></p>
+<p><strong>A simple web application</strong></p>
+<p>Before getting started, my github repository have to be cloned. The link is given here, [<i><a href="https://github.com/NomanAbdullah/csrf-double-submit-cookie-pattern" target="_blank" rel="nofollow noopener noreferrer">my github link</a></i>] </p>
+<p>This web application is developed using PHP &amp; JS. An username and password is need to login to the application. For this application, the credentials are hardcoded (<strong>username: noman, password: noman</strong>)</p>
+<p id="199e"><img src="https://nomanabdullah.github.io/media/posts/7/Screenshot-299.png" alt="" width="1360" height="667"></p>
+<p class="graf graf--p graf-after--figure">User credentials in the login form is submitted using a POST methid. When the user is logged in successfully, server side will created a unique session id and a token but unlike STP, server only stores the session id in this method.</p>
+<p>Following that server responses the corresponding token along with the response body. The generates session id and the server response token set cookies in the user's web browser.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/7/Screenshot-297.png" alt="" width="1349" height="677"></p>
+<p>After logging in, the user will be redirected to status update page. In this page, an AJAX call(self-call) is implemented to get the stored <strong>CSRF</strong> token from the browser cookies.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/7/Screenshot-293.png" alt="" width="877" height="162"></p>
+<p>Now, the corresponding <strong>CSRF</strong> token is added to the hidden field as following:</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/7/Screenshot-292.png" alt="" width="665" height="248"></p>
+<p class="graf graf--p graf-after--figure">A POST request is implemented to update user status. This request consists of the generated token and the session cookie.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/7/Screenshot-291.png" alt="" width="1342" height="675"></p>
+<p>After adding some value when user clicks on "Update" button, the POST request is sent. Meanwhile, the cookie hearder is validated by the server for session id as well as server compares the token from request body which is a hidden value against the token from header cookie.</p>
+<p>If both tokens are matched, the server accepts the request as follows:</p>
+<p><img style="font-size: inherit;" src="https://nomanabdullah.github.io/media/posts/7/Screenshot-294.png" alt="" width="1243" height="127"></p>
+<p>Else the server will show following error:</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/7/Screenshot-298.png" alt="" width="677" height="68"></p>
+<p><strong>Why the method is safe?</strong></p>
+<p>With every request cookies are sent autometically, regardless of whether the request was initiated by the original website or by a third party website. That’s why a cookie alone does not suffice as every request will contain it.</p>
+<p id="e875" class="graf graf--p graf-after--p">But by having the token also in the request itself, an attacking site cannot generate valid requests any more as they can’t get hold on the user’s token.</p>
+<p> Thank you for reading this post. Hope, this will help to implement Double Submit Cookie Pattern in web applications.</p>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>CSRF - Synchronizer Token Pattern</title>
+        <author>
+            <name>Noman Abdullah</name>
+        </author>
+        <link href="https://nomanabdullah.github.io/csrf-synchnorizer-token-pattern/"/>
+        <id>https://nomanabdullah.github.io/csrf-synchnorizer-token-pattern/</id>
+
+        <updated>2019-05-17T20:57:44+05:30</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://nomanabdullah.github.io/media/posts/6/final1.jpg" alt="" />
+                    Hello Visitors, Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they’re currently authenticated. CSRF attacks specifically target state-changing requests, not theft of data since the attacker has no way to see&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://nomanabdullah.github.io/media/posts/6/final1.jpg" alt="" />
+                <p><strong>Hello Visitors,</strong></p>
+<p>Cross-Site Request Forgery (<strong class="markup--strong markup--p-strong">CSRF</strong>) is an attack that forces an end user to execute unwanted actions on a web application in which they’re currently authenticated. <strong>CSRF </strong>attacks specifically target state-changing requests, not theft of data since the attacker has no way to see the response to the forged request. To prevent this attack, I am trying to implement one of the solutions called Synchronizer Token Pattern in this blog. A simple web application is created in this regard.</p>
+<p><strong>Synchronizer Token Pattern (STP)</strong></p>
+<p>This is a method where a secret, token and unique value for each request, is embedded by the web application in all HTML forms and verified on server side. This is one of the identified solutions to prevent Cross-site Request Forgery (<strong>CSRF</strong>) attack.</p>
+<p><strong>How it works?</strong></p>
+<p>In this method, a random string value is generated in server side and append it to the front end body and checks both values when a user submit web page. Normally this random string value is long enough and enocded in base64. </p>
+<p><img src="https://nomanabdullah.github.io/media/posts/6/001.png" alt="" width="766" height="433"></p>
+<p id="mcetoc_1db2guur60" class="align-center"><strong>Synchronizer Tokens</strong></p>
+<ul style="list-style-type: square;">
+<li class="align-left">Large Random value</li>
+<li class="align-left">Unique value for per user session</li>
+<li id="bca2" class="graf graf--li graf-after--li">Generated by a cryptographically secure random number generator</li>
+<li class="align-left">Session contains token and checked in the backend</li>
+<li class="align-left">If the token fails validation, the server rejects the requested action</li>
+</ul>
+<p><br><strong>A Simple Web Application</strong></p>
+<p>Before getting started, my github repository should be cloned. The link can be found here, [<em><a href="https://github.com/NomanAbdullah/csrf-synchronizer-token-pattern" target="_blank" rel="nofollow noopener noreferrer">my github link</a></em>] </p>
+<p>This web application is developed using PHP &amp; JS. An username and password is need to login to the application. For this application, the credentials are hardcoded (<strong>username: noman, password: noman</strong>)</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/6/Screenshot-285.png" alt="" width="1360" height="660"></p>
+<p class="graf graf--p graf-after--figure">The user credentials are submitted through this login form using a POST method. The valid user can successfully login else an error message will appear. At the time of logging in successfully, a unique session id and a token will be created along with the created session and generate a session id set as a cookie in the web browser.</p>
+<p>This token is stored at the server side. For this project, the token is store in a text tile.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/6/Screenshot-295.png" alt="" width="1338" height="671"></p>
+<p>After logging in, the browser will send an Ajax call to  get the token to csrf_token_generator.php. This Ajax call contains the session id and following that the server will response the corresponding token along with the response body.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/6/Screenshot-288.png" alt="" width="667" height="248"></p>
+<p>The above screenshot shows the highlighted line where token embeds into a hidden field on form submit. Used openssl_randon_pseudo_bytes() function in PHP to generate the 32bit long <strong>CSRF</strong> token.The generated value then converted into it’s base64 value using base64_encode() in order to make it more secure. Although the whole thing is happening but the user doesn't see this when the page loads.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/6/Screenshot-286.png" alt="" width="1341" height="669"></p>
+<p>Here, a POST request is implemented to update user status. The post request contains this generated <strong>CSRF</strong> token and the session cookie.</p>
+<p>When the user clicks “Update” button, the Post request is sent. Then the server validates session id which came from request header and <strong>CSRF</strong> token in the body.</p>
+<p>If the token is valid, server accept the request and output comes out as following:</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/6/Screenshot-287.png" alt="" width="435" height="180"></p>
+<p>If the token is not valid, server rejects the request.</p>
+<p><img src="https://nomanabdullah.github.io/media/posts/6/Screenshot-289.png" alt="" width="606" height="166"></p>
+<p><strong>Why this Method is safe?</strong></p>
+<p>Assume, an attacker sends a link to a user that contains post request hidden to update user status but the attacker is not able to add the <strong>CSRF</strong> token to the POST request. In this case, server will ignore the request.</p>
+<p>Thank you for reading my blog. Hope, this will help to implement Synchronizer Token Pattern in web applications.</p>
+<p id="da5b"> </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Squid Proxy Server on CentOS 7 With Web Caching</title>
         <author>
