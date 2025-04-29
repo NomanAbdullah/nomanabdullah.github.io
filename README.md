@@ -1,3 +1,3 @@
-# Noman Abdullah - The Official Repository
+# The Official Respository
 
-## https://iamnoman.tech
+## Author: Noman Abdullah
