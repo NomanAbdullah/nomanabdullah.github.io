@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdullah Al Noman - Personal Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #154734 0%, #003015 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #154734, #FFB81C, #154734);
+            border-radius: 20px 20px 0 0;
+        }
+/*
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid #154734;
+            background: linear-gradient(45deg, #154734, #FFB81C);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+*/
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid #154734;
+            background-image: url('./image/noman.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #154734, #FFB81C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #154734;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #FFB81C;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            background: linear-gradient(45deg, #154734, #FFB81C);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(21, 71, 52, 0.4);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #333;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #154734, #FFB81C);
+            border-radius: 2px;
+        }
+
+        .research-area {
+            background: linear-gradient(135deg, #f8fcf9 0%, #e8f5ea 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #154734;
+            transition: transform 0.3s ease;
+        }
+
+        .research-area:hover {
+            transform: translateX(5px);
+        }
+
+        .research-area h3 {
+            color: #154734;
+            margin-bottom: 10px;
+        }
+
+        .publication {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 3px solid #154734;
+            transition: all 0.3s ease;
+        }
+
+        .publication:hover {
+            background: #e8f5ea;
+            transform: translateX(5px);
+        }
+
+        .publication-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .publication-details {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .cv-section {
+            margin-bottom: 30px;
+        }
+
+        .cv-section h3 {
+            color: #154734;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .cv-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            border-left: 2px solid #e9ecef;
+            position: relative;
+        }
+
+        .cv-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            background: #154734;
+            border-radius: 50%;
+        }
+
+        .cv-item-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .cv-item-details {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .skill-category {
+            background: linear-gradient(135deg, #f8fcf9 0%, #e8f5ea 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .skill-category h4 {
+            color: #154734;
+            margin-bottom: 10px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #154734;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #154734, #FFB81C);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(21, 71, 52, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-img"></div>
+            <h1>Abdullah Al Noman</h1>
+            <p class="subtitle">PhD Student in Computer Science, Cybersecurity</p>
+            <p>Cybersecurity Research</p>
+            <div class="contact-info">
+                <a href="mailto:Abdullah_Noman1@baylor.edu" class="contact-item">
+                    <span>📧</span> Abdullah_Noman1@baylor.edu
+                </a>
+                <a href="https://github.com/NomanAbdullah" class="contact-item">
+                    <span>💻</span> GitHub
+                </a>
+                <a href="https://linkedin.com/in/nabdullah28" class="contact-item">
+                    <span>🔗</span> LinkedIn
+                </a>
+                <a href="https://scholar.google.com/citations?user=tvIFgUEAAAAJ&hl=en" class="contact-item">
+                    <span>🎓</span> Google Scholar
+                </a>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#about" class="nav-link active">About</a></li>
+                <li><a href="#research" class="nav-link">Research</a></li>
+                <li><a href="#publications" class="nav-link">Publications</a></li>
+                <li><a href="#cv" class="nav-link">CV</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section id="about" class="section active">
+            <h2>About Me</h2>
+            <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                Welcome to my academic homepage! I am a PhD student in Computer Science specializing in cybersecurity, 
+                working under the supervision of Dr. Mengfei Ren on cutting-edge security research. My primary focus is on 
+                conducting comprehensive security analysis of C compilers and developing innovative approaches to enhance 
+                software security at the compiler level.
+            </p>
+            <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                I am particularly passionate about the intersection of compiler design and security engineering, with the goal 
+                of creating more secure software ecosystems through compiler-based protections. My research encompasses static 
+                analysis techniques, memory safety enhancements, and security-preserving compiler optimizations that maintain 
+                both performance and robustness against various attack vectors.
+            </p>
+            <p style="font-size: 1.1em; line-height: 1.8;">
+                My work contributes to the broader field of software security by addressing fundamental vulnerabilities at the 
+                compilation stage, with applications spanning from IoT devices to enterprise systems. I am actively engaged in 
+                research collaborations and am working towards publications in top-tier security conferences and journals.
+            </p>
+        </section>
+
+        <section id="research" class="section">
+            <h2>Research Areas</h2>
+            <div class="research-area">
+                <h3>🛡️ Software Security</h3>
+                <p>Researching compiler-based security enhancements for C/C++ programs, developing novel static analysis techniques for memory safety violations, and creating compiler optimizations that preserve security properties while improving performance.</p>
+            </div>
+            <div class="research-area">
+                <h3>🔒 Security Engineering</h3>
+                <p>Designing robust security architectures, implementing defense-in-depth strategies, and developing secure system design methodologies for critical infrastructure protection.</p>
+            </div>
+             <div class="research-area">
+                <h3>🤖 Generative AI Security</h3>
+                <p>Investigating security risks in large language models, developing adversarial attack detection systems, and creating frameworks for secure AI model deployment and prompt injection prevention.</p>
+            </div>
+            <div class="research-area">
+                <h3>🌐 IoT Security</h3>
+                <p>Securing Internet of Things ecosystems, developing lightweight cryptographic protocols for resource-constrained devices, and creating security frameworks for smart home and industrial IoT networks.</p>
+            </div>
+        </section>
+
+        <section id="publications" class="section">
+            <h2>Selected Publications</h2>
+            <div class="publication">
+                <div class="publication-title"> An AI-Based Security Analysis Solution for DevSecOps </div>
+                <div class="publication-details">
+                    <strong>Abdullah Al Noman</strong>, Samson Olugbenga Idowu, Rolly Davany Mougoue Kakanou, Paolo Ciancarini, Mengfei Ren<br>
+                    <em>International Symposium on Intelligent Computing and Networking(ISICN)</em>, 2025<br>
+                    <a href="#" style="color: #154734;">Paper</a> <!--- | <a href="#" style="color: #154734;">Code</a> --->
+                </div>
+            </div>
+            <div class="publication">
+                <div class="publication-title">Deepfake audio detection: a deep learning based solution for group conversations</div>
+                <div class="publication-details">
+                    R.L.M.A.P.C. Wijethunga, D.M.K. Matheesha, <strong>Abdullah Al Noman</strong>, K.H.V.T.A. De Silva, Muditha Tissera, Lakmal Rupasinghe<br>
+                    <em>2nd International Conference on Advancements in Computing (ICAC)</em>, 2020<br>
+                    <a href="https://ieeexplore.ieee.org/document/9357161" style="color: #154734;">Paper</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="cv" class="section">
+            <h2>Curriculum Vitae</h2>
+            
+            <div class="cv-section">
+                <h3>🎓 Education</h3>
+                <div class="cv-item">
+                    <div class="cv-item-title">PhD in Computer Science, Cybersecurity</div>
+                    <div class="cv-item-details">Baylor University | Waco, Texas | Aug 2025 - Present</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">PhD in Computer Engineering, Cybersecurity (Transferred)</div>
+                    <div class="cv-item-details">The University of Alabama in Huntsville | Huntsville, Alabama | Aug 2024 - May 2025</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">Master of Science in Security and Network Engineering</div>
+                    <div class="cv-item-details">Innopolis University | Republic of Tatarstan, Russia | Aug 2022 - Aug 2024</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">Bachelor of Science in Information Technology (Cybersecurity)</div>
+                    <div class="cv-item-details">Sri Lanka Institute of Information Technology (SLIIT) | Colombo, Sri Lanka | Jan 2017 - Jan 2021</div>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3>💼 Experience</h3>
+                <div class="cv-item">
+                    <div class="cv-item-title">Graduate Research Assistant</div>
+                    <div class="cv-item-details">Baylor University | Aug 2025 - Present</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">Graduate Research Assistant</div>
+                    <div class="cv-item-details">The University of Alabama in Huntsville | Aug 2024 - May 2025</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">Cybersecurity Engineer - Technical Content</div>
+                    <div class="cv-item-details">Wazuh Inc. | Dec 2022 - Aug 2024</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">Cybersecurity Engineer - Research & Development</div>
+                    <div class="cv-item-details">Quantei Australia Pty Ltd | Oct 2019 - Oct 2022</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">AWS Cloud Ambassador</div>
+                    <div class="cv-item-details">Amazon Web Services | May 2019 - Aug 2020</div>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3>🏆 Awards & Honors</h3>
+                <div class="cv-item">
+                    <div class="cv-item-title">Highest Performer</div>
+                    <div class="cv-item-details">Wazuh Inc. | 2023 - 2024</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">Innopolis University Scholarship</div>
+                    <div class="cv-item-details">Russia | 2022 - 2024</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-item-title">SAARC Scholarship</div>
+                    <div class="cv-item-details">Sri Lanka | 2017 - 2021</div>
+                </div>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Programming</h4>
+                    <p>C, Python, Bash, PowerShell, Swift, Assembly</p>
+                </div>
+                <div class="skill-category">
+                    <h4>ML/AI</h4>
+                    <p>Deep Learning, Natural Language Processing, Reinforcement Learning</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Tools</h4>
+                    <p>Git, Docker, K8s, Ansible, Terraform, AWS, Google Cloud, MS Azure, Jupyter, LaTeX</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Languages</h4>
+                    <p>Bengali (Native), English (Fluent), Spanish (Beginner)</p>
+                </div>
+            </div>
+        </section>
+
+            <section id="contact" class="section">
+            <h2>Get In Touch</h2>
+            <p style="text-align: center; font-size: 1.1em; margin-bottom: 30px;">
+                I'm always interested in discussing research collaborations, job opportunities, or security research topics!
+            </p>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button class="btn" onclick="window.location.href='mailto:Abdullah_Noman1@baylor.edu?subject=Research Inquiry&body=Hello, I would like to discuss...'">
+                    📧 Email Me Directly
+                </button>
+            </div>
+            
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all nav links and sections
+                navLinks.forEach(nl => nl.classList.remove('active'));
+                sections.forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked nav link
+                link.classList.add('active');
+                
+                // Show corresponding section
+                const targetId = link.getAttribute('href').substring(1);
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            e.target.reset();
+        });
+
+        // Add smooth scrolling effect to profile image
+        document.querySelector('.profile-img').addEventListener('click', () => {
+            document.querySelector('.profile-img').style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                document.querySelector('.profile-img').style.transform = 'rotate(0deg)';
+            }, 600);
+        });
+    </script>
+
+</body>
+</html>
