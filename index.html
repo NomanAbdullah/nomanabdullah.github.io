@@ -1,1006 +1,401 @@
+
+
+Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abdullah Al Noman — Cybersecurity Researcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Abdullah Al Noman, Compiler security research</title>
+  <meta name="description" content="Abdullah Al Noman is a PhD student in Computer Science at Baylor University studying bugs and security flaws that compiler optimizations introduce into C programs." />
+  <meta property="og:title" content="Abdullah Al Noman" />
+  <meta property="og:description" content="PhD student at Baylor University researching compiler optimization bugs and software security." />
+  <meta property="og:image" content="./image/noman.jpg" />
+  <meta name="theme-color" content="#f4f5f2" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23262a7a'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23fff' text-anchor='middle'%3EAN%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --forest: #154734;
-      --gold: #FFB81C;
-      --gold-light: #ffd06a;
-      --ink: #0d1a13;
-      --cream: #f5f0e8;
-      --cream-dark: #ede7d5;
-      --muted: #6b7b6e;
-      --border: #d4cfc4;
-      --surface: #faf8f3;
+      --paper: #f4f5f2;
+      --sheet: #ffffff;
+      --ink: #17191f;
+      --muted: #5b606c;
+      --rule: #d9dbd6;
+      --indigo: #262a7a;
+      --removed: #b3261e;
+      --removed-bg: #fbe9e7;
+      --kept: #1d6b45;
+      --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --measure: 36rem;
     }
-
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #15171c;
+        --sheet: #1d2027;
+        --ink: #e8e9ec;
+        --muted: #a1a6b2;
+        --rule: #30343d;
+        --indigo: #a9adff;
+        --removed: #ff8a80;
+        --removed-bg: #3a1f1d;
+        --kept: #7dd3a6;
+      }
     }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+ 
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
+      margin: 0;
+      background: var(--paper);
       color: var(--ink);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── Noise texture overlay ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── Layout ── */
-    .site-wrapper {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 100vh;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Sidebar ── */
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      background: var(--forest);
-      display: flex;
-      flex-direction: column;
-      padding: 48px 32px;
-      overflow-y: auto;
-    }
-
-    .sidebar-top {
-      flex: 1;
-    }
-
-    .avatar-ring {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      padding: 3px;
-      margin-bottom: 20px;
-    }
-
-    .avatar-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold) 0%, #c88a10 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'DM Serif Display', serif;
-      font-size: 28px;
-      color: var(--forest);
-      overflow: hidden;
-    }
-
-    .avatar-inner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .sidebar h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem;
-      color: #fff;
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-
-    .sidebar .role {
-      font-size: 0.78rem;
-      color: var(--gold-light);
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .sidebar .institution {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 32px;
-    }
-
-    /* Nav */
-    .sidebar-nav {
-      list-style: none;
-      margin-bottom: 36px;
-    }
-
-    .sidebar-nav li {
-      margin-bottom: 2px;
-    }
-
-    .sidebar-nav a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.9rem;
-      font-weight: 400;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .sidebar-nav a .nav-icon {
-      font-size: 1rem;
-      width: 20px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-
-    .sidebar-nav a:hover,
-    .sidebar-nav a.active {
-      background: rgba(255,184,28,0.12);
-      color: var(--gold-light);
-    }
-
-    .sidebar-nav a.active {
-      font-weight: 500;
-    }
-
-    .sidebar-nav a.active::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      width: 3px;
-      height: 34px;
-      background: var(--gold);
-      border-radius: 0 3px 3px 0;
-    }
-
-    .sidebar-nav li { position: relative; }
-
-    /* Contacts */
-    .sidebar-contacts {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 24px;
-    }
-
-    .sidebar-contacts a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: rgba(255,255,255,0.45);
-      text-decoration: none;
-      font-size: 0.78rem;
-      font-family: 'DM Mono', monospace;
-      margin-bottom: 10px;
-      transition: color 0.2s;
-      word-break: break-all;
-    }
-
-    .sidebar-contacts a:hover {
-      color: var(--gold-light);
-    }
-
-    /* ── Main content ── */
-    .main {
-      padding: 64px 72px;
-      max-width: 860px;
-    }
-
-    /* Sections */
-    .content-section {
-      display: none;
-      animation: fadeUp 0.4s ease both;
-    }
-
-    .content-section.active {
-      display: block;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Section headings */
-    .section-eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.6rem;
-      color: var(--ink);
-      line-height: 1.15;
-      margin-bottom: 36px;
-    }
-
-    /* ── About ── */
-    .about-lead {
-      font-size: 1.15rem;
-      line-height: 1.85;
-      color: #2a3d2f;
-      font-weight: 300;
-      margin-bottom: 24px;
-      max-width: 620px;
-    }
-
-    .about-lead strong {
-      font-weight: 500;
-      color: var(--forest);
-    }
-
-    .interest-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 36px;
-    }
-
-    .chip {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--forest);
-      font-size: 0.8rem;
-      font-family: 'DM Mono', monospace;
-      padding: 6px 14px;
-      border-radius: 100px;
-      letter-spacing: 0.02em;
-    }
-
-    .divider {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      margin: 40px 0;
-      border: none;
-    }
-
-    /* ── Research ── */
-    .research-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .research-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px;
-      transition: all 0.25s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .research-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--forest), var(--gold));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-
-    .research-card:hover {
-      border-color: #b5b0a4;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.07);
-    }
-
-    .research-card:hover::after {
-      transform: scaleX(1);
-    }
-
-    .research-icon {
-      font-size: 1.6rem;
-      margin-bottom: 14px;
-      display: block;
-    }
-
-    .research-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: var(--forest);
-      margin-bottom: 10px;
-    }
-
-    .research-card p {
-      font-size: 0.87rem;
-      line-height: 1.7;
-      color: var(--muted);
-    }
-
-    /* ── Publications ── */
-    .pub-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .pub-item {
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .pub-year {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--gold);
-      font-weight: 500;
-      padding-top: 4px;
-    }
-
-    .pub-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.05rem;
-      color: var(--ink);
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-
-    .pub-authors {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      line-height: 1.5;
-    }
-
-    .pub-authors strong {
-      color: var(--forest);
-      font-weight: 500;
-    }
-
-    .pub-venue {
-      font-size: 0.8rem;
-      font-style: italic;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .pub-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.78rem;
-      font-family: 'DM Mono', monospace;
-      color: var(--forest);
-      text-decoration: none;
-      border-bottom: 1px solid var(--forest);
-      padding-bottom: 1px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .pub-link:hover {
-      color: var(--gold);
-      border-color: var(--gold);
-    }
-
-    /* ── CV ── */
-    .cv-block {
-      margin-bottom: 48px;
-    }
-
-    .cv-block-title {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-
-    .timeline {
-      position: relative;
-      padding-left: 24px;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      bottom: 8px;
-      width: 1px;
-      background: var(--border);
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: 28px;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -28px;
-      top: 7px;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--gold);
-      border: 2px solid var(--cream);
-      box-shadow: 0 0 0 1px var(--gold);
-    }
-
-    .tl-title {
-      font-weight: 500;
-      font-size: 0.97rem;
-      color: var(--ink);
-      margin-bottom: 3px;
-    }
-
-    .tl-sub {
-      font-size: 0.82rem;
-      color: var(--muted);
-      font-family: 'DM Mono', monospace;
-    }
-
-    .skills-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .skill-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 20px;
-    }
-
-    .skill-box h4 {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
-
-    .skill-box p {
-      font-size: 0.85rem;
-      color: var(--muted);
+      font-family: var(--serif);
+      font-size: 1.1875rem;
       line-height: 1.6;
+      font-optical-sizing: auto;
+      -webkit-font-smoothing: antialiased;
     }
-
-    /* ── Contact ── */
-    .contact-intro {
-      font-size: 1.05rem;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 540px;
-      margin-bottom: 40px;
+    a { color: var(--indigo); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; border-radius: 2px; }
+    p { margin: 0 0 1em; }
+    h1, h2, h3 { font-weight: 500; margin: 0; }
+ 
+    .wrap { width: min(72rem, 100% - 3rem); margin-inline: auto; }
+ 
+    /* Header */
+    .top {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
     }
-
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 48px;
+    .top .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; padding-block: 0.9rem; }
+    .brand { font-size: 1.15rem; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .top nav ul { list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 0; padding: 0; font-size: 1.05rem; }
+    .top nav a { color: var(--muted); text-decoration: none; }
+    .top nav a:hover { color: var(--ink); }
+ 
+    /* Hero */
+    .hero { padding-block: clamp(3rem, 8vw, 6.5rem) clamp(3rem, 7vw, 5.5rem); }
+    .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+    .hero h1 {
+      font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      max-width: 13ch;
     }
-
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 0.95rem;
+    .hero .lede { color: var(--muted); max-width: 30rem; font-size: 1.25rem; }
+    .hero .who { font-size: 1.05rem; color: var(--ink); margin-top: 1.75rem; }
+    .hero .who a { margin-right: 1.1rem; white-space: nowrap; }
+ 
+    /* Compiler demo */
+    .demo {
+      background: var(--sheet);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
     }
-
-    .contact-row .icon {
-      width: 40px;
-      height: 40px;
-      background: var(--forest);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
+    .demo-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 0.65rem 0.75rem 0.65rem 1.1rem;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono); font-size: 0.8rem; color: var(--muted);
     }
-
-    .contact-row a {
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
+    .switch { display: inline-flex; border: 1px solid var(--rule); border-radius: 7px; padding: 2px; background: var(--paper); }
+    .switch button {
+      font: inherit; color: var(--muted); background: transparent; border: 0; border-radius: 5px;
+      padding: 0.3rem 0.7rem; cursor: pointer;
     }
-
-    .contact-row a:hover {
-      color: var(--forest);
-      border-color: var(--forest);
+    .switch button[aria-pressed="true"] { background: var(--sheet); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+    .code {
+      margin: 0; padding: 1.1rem 0; overflow-x: auto;
+      font-family: var(--mono); font-size: clamp(0.8rem, 1.4vw, 0.92rem); line-height: 1.75;
     }
-
-    .contact-form-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 36px;
+    .code .ln { display: block; padding-inline: 1.1rem 1.25rem; white-space: pre; position: relative; }
+    .code .c { color: var(--muted); }
+    .code .k { color: var(--indigo); }
+    .ln.check { transition: background-color 0.35s ease, color 0.35s ease; }
+    .demo[data-mode="o2"] .ln.check { background: var(--removed-bg); color: var(--removed); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+    .demo[data-mode="o2"] .ln.check .k, .demo[data-mode="o2"] .ln.check .c { color: inherit; }
+    .ln.check::before {
+      content: "-"; position: absolute; left: 0.35rem; color: var(--removed); opacity: 0; transition: opacity 0.35s ease;
     }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .demo[data-mode="o2"] .ln.check::before { opacity: 1; }
+    .demo-note {
+      border-top: 1px solid var(--rule); padding: 0.95rem 1.1rem 1.05rem;
+      font-size: 1rem; line-height: 1.55; color: var(--muted); min-height: 6.6rem;
     }
-
-    .field {
-      margin-bottom: 18px;
+    .demo-note code { font-family: var(--mono); font-size: 0.9em; color: var(--ink); }
+    .demo-note strong { color: var(--ink); font-weight: 600; }
+    @media (prefers-reduced-motion: reduce) { .ln.check, .ln.check::before { transition: none; } }
+ 
+    /* Sections */
+    section.block { border-top: 1px solid var(--rule); padding-block: clamp(3rem, 7vw, 5rem); }
+    .block .wrap { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 1.5rem clamp(2rem, 5vw, 4rem); }
+    .block h2 { font-size: 1.9rem; line-height: 1.15; letter-spacing: -0.01em; }
+    .prose { max-width: var(--measure); }
+ 
+    /* About */
+    .about { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 2.5rem; align-items: start; }
+    .about img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: 6px; filter: saturate(0.92); }
+ 
+    /* Research */
+    .themes { display: grid; gap: 2.25rem; max-width: 46rem; }
+    .theme h3 { font-size: 1.4rem; margin-bottom: 0.4rem; }
+    .theme p { color: var(--ink); max-width: var(--measure); }
+    .theme .q { color: var(--muted); font-style: italic; }
+    .also { color: var(--muted); max-width: var(--measure); border-left: 2px solid var(--rule); padding-left: 1rem; }
+ 
+    /* Publications */
+    .pubs { list-style: none; margin: 0; padding: 0; max-width: 46rem; }
+    .pub { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1.4rem; border-bottom: 1px solid var(--rule); }
+    .pub:first-child { padding-top: 0; }
+    .pub .yr { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 1.05rem; padding-top: 0.1rem; }
+    .pub h3 { font-size: 1.3rem; line-height: 1.3; margin-bottom: 0.35rem; }
+    .pub h3 a { color: var(--ink); text-decoration: none; }
+    .pub h3 a:hover { color: var(--indigo); text-decoration: underline; }
+    .pub .meta { color: var(--muted); font-size: 1.02rem; line-height: 1.5; margin: 0; }
+    .pub .meta b { color: var(--ink); font-weight: 600; }
+    .pub .venue { font-style: italic; }
+ 
+    /* CV */
+    .cv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 3rem; max-width: 52rem; }
+    .cv h3 { font-size: 1.15rem; color: var(--muted); font-weight: 500; margin-bottom: 0.9rem; }
+    .cv ol { list-style: none; margin: 0; padding: 0; }
+    .cv li { margin-bottom: 1.1rem; line-height: 1.4; }
+    .cv li .what { display: block; }
+    .cv li .where { display: block; color: var(--muted); font-size: 1rem; }
+    .skills { margin: 0; }
+    .skills dt { line-height: 1.4; }
+    .skills dd { margin: 0 0 1.1rem; color: var(--muted); font-size: 1rem; line-height: 1.4; }
+ 
+    /* Contact */
+    .contact p { max-width: var(--measure); }
+    .contact .mail { font-size: clamp(1.35rem, 3vw, 1.9rem); word-break: break-word; }
+    .links { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; gap: 0.5rem 1.6rem; flex-wrap: wrap; }
+ 
+    footer { border-top: 1px solid var(--rule); padding-block: 1.75rem 2.5rem; color: var(--muted); font-size: 0.95rem; }
+ 
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero .wrap { grid-template-columns: 1fr; }
+      .hero h1 { max-width: 16ch; }
+      .block .wrap { grid-template-columns: 1fr; }
     }
-
-    .field label {
-      display: block;
-      font-size: 0.78rem;
-      font-family: 'DM Mono', monospace;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .field input,
-    .field textarea {
-      width: 100%;
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 11px 14px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem;
-      color: var(--ink);
-      transition: border-color 0.2s;
-      outline: none;
-    }
-
-    .field input:focus,
-    .field textarea:focus {
-      border-color: var(--forest);
-    }
-
-    .field textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    .btn-primary {
-      background: var(--forest);
-      color: #fff;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary:hover {
-      background: #0e3224;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(21,71,52,0.3);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .site-wrapper {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: relative;
-        height: auto;
-        padding: 32px 24px;
-      }
-
-      .main {
-        padding: 40px 24px;
-        max-width: 100%;
-      }
-
-      .research-grid,
-      .skills-row,
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .section-title { font-size: 2rem; }
-      .contact-form-wrap { padding: 22px; }
-    }
-
-    /* ── Subtle footer ── */
-    .sidebar-footer {
-      margin-top: 32px;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.2);
-      font-family: 'DM Mono', monospace;
+    @media (max-width: 640px) {
+      body { font-size: 1.125rem; }
+      .top nav ul { gap: 1rem; font-size: 1rem; }
+      .about { grid-template-columns: 1fr; }
+      .about img { width: 9rem; order: -1; }
+      .cv { grid-template-columns: 1fr; }
+      .pub { grid-template-columns: 1fr; gap: 0.2rem; }
     }
   </style>
 </head>
 <body>
-
-<div class="site-wrapper">
-
-  <!-- ── SIDEBAR ── -->
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="avatar-ring">
-        <div class="avatar-inner">
-          <img src="./image/noman.jpg" alt="Abdullah Al Noman" onerror="this.style.display='none';this.parentElement.textContent='AN'" />
-        </div>
-      </div>
-
-      <h1>Abdullah<br>Al Noman</h1>
-      <p class="role">PhD Student · CS</p>
-      <p class="institution">Baylor University, Waco TX</p>
-
-      <ul class="sidebar-nav">
-        <li><a class="nav-link active" data-target="about">
-          <span class="nav-icon">◈</span> About
-        </a></li>
-        <li><a class="nav-link" data-target="research">
-          <span class="nav-icon">⬡</span> Research
-        </a></li>
-        <li><a class="nav-link" data-target="publications">
-          <span class="nav-icon">◻</span> Publications
-        </a></li>
-        <li><a class="nav-link" data-target="cv">
-          <span class="nav-icon">◧</span> CV
-        </a></li>
-        <li><a class="nav-link" data-target="contact">
-          <span class="nav-icon">◉</span> Contact
-        </a></li>
+ 
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Abdullah Al Noman</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#cv">CV</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-
-      <div class="sidebar-contacts">
-        <a href="mailto:Abdullah_Noman1@baylor.edu">
-          <span>✉</span> Abdullah_Noman1@baylor.edu
-        </a>
-        <a href="https://github.com/NomanAbdullah" target="_blank" rel="noopener">
-          <span>⌥</span> github.com/NomanAbdullah
-        </a>
-        <a href="https://linkedin.com/in/nabdullah28" target="_blank" rel="noopener">
-          <span>⊞</span> linkedin.com/in/nabdullah28
-        </a>
-        <a href="https://scholar.google.com/citations?user=tvIFgUEAAAAJ&hl=en" target="_blank" rel="noopener">
-          <span>◎</span> Google Scholar
-        </a>
+    </nav>
+  </div>
+</header>
+ 
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Compilers make code fast. I study when they make it wrong.</h1>
+        <p class="lede">I’m a PhD student in Computer Science at Baylor University, studying how compiler optimizations interact with undefined behavior, security bugs, and programmer assumptions in C programs.</p>
+        <p class="who">
+          <a href="mailto:Abdullah_Noman1@baylor.edu">Email</a>
+          <a href="https://scholar.google.com/citations?user=tvIFgUEAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+          <a href="https://github.com/NomanAbdullah" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/nabdullah28" target="_blank" rel="noopener">LinkedIn</a>
+        </p>
+      </div>
+ 
+      <figure class="demo" id="demo" data-mode="o0" aria-labelledby="demo-note" style="margin:0">
+        <div class="demo-bar">
+          <span>read_len.c</span>
+          <div class="switch" role="group" aria-label="Compilation mode">
+            <button type="button" data-mode="o0" aria-pressed="true">Source</button>
+            <button type="button" data-mode="o2" aria-pressed="false">gcc -O2</button>
+          </div>
+        </div>
+<pre class="code"><code><span class="ln"><span class="k">int</span> read_len(<span class="k">struct</span> pkt *p) {</span><span class="ln">    <span class="k">int</span> len = p-&gt;len;</span><span class="ln check">    <span class="k">if</span> (p == NULL)  <span class="c">// safety check</span></span><span class="ln check">        <span class="k">return</span> -EINVAL;</span><span class="ln">    <span class="k">return</span> len;</span><span class="ln">}</span></code></pre>
+        <figcaption class="demo-note" id="demo-note" aria-live="polite">
+          <span data-for="o0">A programmer adds a null check to guard against a bad pointer. Switch to <strong>gcc -O2</strong> to see what the optimizer does with it.</span>
+          <span data-for="o2" hidden>Because <code>p</code> was already dereferenced, the optimizer assumes it can't be null and <strong>deletes the check</strong>. The same pattern made a Linux kernel bug exploitable in 2009 (CVE-2009-1897).</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+ 
+  <section class="block" id="about">
+    <div class="wrap">
+      <h2>About</h2>
+      <div class="about">
+        <div class="prose">
+          <p>I work with Dr.&nbsp;Mengfei Ren at Baylor University on compiler correctness and security. Compilers sit underneath nearly every piece of software, so a single wrong optimization can break or weaken thousands of programs that were written correctly. My research asks which optimizations go wrong, why, and how we can catch them before they ship.</p>
+          <p>Before graduate school I spent five years as a security engineer, first in R&amp;D at Quantei and then at Wazuh, where I wrote technical content for its open-source security platform. Those years taught me to focus on problems that show up in production, not just in benchmarks.</p>
+          <p style="margin-bottom:0">I've studied in Sri Lanka, Russia and the United States, and I speak Bengali and English.</p>
+        </div>
+        <img src="./image/noman.jpg" alt="Portrait of Abdullah Al Noman" width="352" height="440" loading="lazy" />
       </div>
     </div>
-
-    <div class="sidebar-footer">© 2025 Abdullah Al Noman</div>
-  </aside>
-
-  <!-- ── MAIN ── -->
-  <main class="main">
-
-    <!-- About -->
-    <section id="about" class="content-section active">
-      <p class="section-eyebrow">Introduction</p>
-      <h2 class="section-title">Securing software<br><em>from the ground up.</em></h2>
-
-      <p class="about-lead">
-        I'm a PhD student in Computer Science at <strong>Baylor University</strong>, working with Dr. Mengfei Ren
-        on security vulnerabilities introduced at the compiler level — a foundational but often overlooked layer of the software stack.
-      </p>
-      <p class="about-lead">
-        My research sits at the intersection of <strong>compiler design</strong> and <strong>security engineering</strong>,
-        asking: what bugs and vulnerabilities does the compiler itself introduce? I develop static analysis
-        techniques and security-preserving optimizations to catch these issues before they reach production.
-      </p>
-      <p class="about-lead">
-        Beyond compilers, I explore <strong>Generative AI security</strong>, <strong>IoT threat modeling</strong>,
-        and defense-in-depth architectures for critical infrastructure.
-      </p>
-
-      <hr class="divider" />
-
-      <div class="interest-chips">
-        <span class="chip">Compiler Security</span>
-        <span class="chip">Static Analysis</span>
-        <span class="chip">Memory Safety</span>
-        <span class="chip">LLM Security</span>
-        <span class="chip">IoT Protocols</span>
-        <span class="chip">DevSecOps</span>
-        <span class="chip">Software Verification</span>
+  </section>
+ 
+  <section class="block" id="research">
+    <div class="wrap">
+      <h2>Research</h2>
+      <div class="themes">
+        <div class="theme">
+          <h3>Bugs introduced by compiler optimization</h3>
+          <p class="q">When does making a program faster make it incorrect?</p>
+          <p>I study real optimization bugs in GCC and LLVM to understand which passes fail and how, then build techniques to detect them automatically in C compilers.</p>
+        </div>
+        <div class="theme">
+          <h3>Security consequences of compilation</h3>
+          <p class="q">Can a correct compiler still make code less safe?</p>
+          <p>Optimizations that are legal under the C standard can remove safety checks or expose memory errors. I work on static analysis and security-preserving optimization so performance doesn't come at the cost of safety.</p>
+        </div>
+        <div class="theme">
+          <h3>AI-assisted security analysis</h3>
+          <p class="q">How can machine learning help teams ship secure code?</p>
+          <p>I've built ML-based security analysis for DevSecOps pipelines and earlier worked on deep-learning detection of deepfake audio.</p>
+        </div>
+        <p class="also">I'm also interested in the security of large language models and multi-agent AI systems.</p>
       </div>
-    </section>
-
-    <!-- Research -->
-    <section id="research" class="content-section">
-      <p class="section-eyebrow">Focus Areas</p>
-      <h2 class="section-title">Research</h2>
-
-      <div class="research-grid">
-        <div class="research-card">
-          <span class="research-icon">🛡</span>
-          <h3>Software Security</h3>
-          <p>Compiler-based security enhancements for C/C++ programs, novel static analysis techniques for memory safety violations, and security-preserving optimizations that maintain performance without sacrificing robustness.</p>
-        </div>
-        <div class="research-card">
-          <span class="research-icon">🔒</span>
-          <h3>Security Engineering</h3>
-          <p>Designing robust security architectures, implementing defense-in-depth strategies, and developing secure system design methodologies for critical infrastructure protection.</p>
-        </div>
-        <div class="research-card">
-          <span class="research-icon">🤖</span>
-          <h3>Generative AI Security</h3>
-          <p>Investigating security risks in large language models, developing adversarial attack detection systems, and creating frameworks for secure AI deployment and prompt injection prevention.</p>
-        </div>
-        <div class="research-card">
-          <span class="research-icon">🌐</span>
-          <h3>IoT Security</h3>
-          <p>Securing IoT ecosystems, developing lightweight cryptographic protocols for resource-constrained devices, and creating security frameworks for smart home and industrial networks.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Publications -->
-    <section id="publications" class="content-section">
-      <p class="section-eyebrow">Scholarship</p>
-      <h2 class="section-title">Publications</h2>
-
-      <div class="pub-list">
-        <div class="pub-item">
-          <div class="pub-year">2026</div>
+    </div>
+  </section>
+ 
+  <section class="block" id="publications">
+    <div class="wrap">
+      <h2>Publications</h2>
+      <ol class="pubs" reversed>
+        <li class="pub">
+          <span class="yr">2026</span>
           <div>
-            <div class="pub-title">Understanding Correctness Failures in Compiler Optimization</div>
-            <div class="pub-authors"><strong>Abdullah Al Noman</strong></div>
-            <div class="pub-venue">41st ACM SIGPLAN International Conference on Systems, Programming, Languages, and Applications: Software for Humanity (SPLASH/ISSTA)</div>
-            <a href="https://dl.acm.org/doi/10.1145/3837729.3839589" class="pub-link" target="_blank" rel="noopener">↗ Paper</a>
+            <h3><a href="https://dl.acm.org/doi/10.1145/3837729.3839589" target="_blank" rel="noopener">Understanding Correctness Failures in Compiler Optimization</a></h3>
+            <p class="meta"><b>Abdullah Al Noman</b><br /><span class="venue">SPLASH / ISSTA 2026</span>, ACM SIGPLAN Conference on Systems, Programming, Languages, and Applications: Software for Humanity</p>
           </div>
-        </div>
-        
-        <div class="pub-item">
-          <div class="pub-year">2026</div>
+        </li>
+        <li class="pub">
+          <span class="yr">2026</span>
           <div>
-            <div class="pub-title">Detection of Optimization-introduced Bugs in C Compilers</div>
-            <div class="pub-authors"><strong>Abdullah Al Noman</strong></div>
-            <div class="pub-venue">48th International Conference on Software Engineering (ICSE)</div>
-            <a href="https://dl.acm.org/doi/10.1145/3774748.3787647" class="pub-link" target="_blank" rel="noopener">↗ Paper</a>
+            <h3><a href="https://dl.acm.org/doi/10.1145/3774748.3787647" target="_blank" rel="noopener">Detection of Optimization-introduced Bugs in C Compilers</a></h3>
+            <p class="meta"><b>Abdullah Al Noman</b><br /><span class="venue">ICSE 2026</span>, 48th IEEE/ACM International Conference on Software Engineering</p>
           </div>
-        </div>
-
-        <div class="pub-item">
-          <div class="pub-year">2025</div>
+        </li>
+        <li class="pub">
+          <span class="yr">2025</span>
           <div>
-            <div class="pub-title">An AI-Based Security Analysis Solution for DevSecOps</div>
-            <div class="pub-authors"><strong>Abdullah Al Noman</strong>, Samson Olugbenga Idowu, Rolly Davany Mougoue Kakanou, Paolo Ciancarini, Mengfei Ren</div>
-            <div class="pub-venue">International Symposium on Intelligent Computing and Networking (ISICN)</div>
-            <a href="https://link.springer.com/chapter/10.1007/978-3-032-09694-4_22" class="pub-link" target="_blank" rel="noopener">↗ Paper</a>
+            <h3><a href="https://link.springer.com/chapter/10.1007/978-3-032-09694-4_22" target="_blank" rel="noopener">An AI-Based Security Analysis Solution for DevSecOps</a></h3>
+            <p class="meta"><b>Abdullah Al Noman</b>, Samson Olugbenga Idowu, Rolly Davany Mougoue Kakanou, Paolo Ciancarini, Mengfei Ren<br /><span class="venue">ISICN 2025</span>, International Symposium on Intelligent Computing and Networking</p>
           </div>
-        </div>
-
-        <div class="pub-item">
-          <div class="pub-year">2020</div>
+        </li>
+        <li class="pub">
+          <span class="yr">2020</span>
           <div>
-            <div class="pub-title">Deepfake Audio Detection: A Deep Learning Based Solution for Group Conversations</div>
-            <div class="pub-authors">R.L.M.A.P.C. Wijethunga, D.M.K. Matheesha, <strong>Abdullah Al Noman</strong>, K.H.V.T.A. De Silva, Muditha Tissera, Lakmal Rupasinghe</div>
-            <div class="pub-venue">2nd International Conference on Advancements in Computing (ICAC), IEEE</div>
-            <a href="https://ieeexplore.ieee.org/document/9357161" class="pub-link" target="_blank" rel="noopener">↗ Paper</a>
+            <h3><a href="https://ieeexplore.ieee.org/document/9357161" target="_blank" rel="noopener">Deepfake Audio Detection: A Deep Learning Based Solution for Group Conversations</a></h3>
+            <p class="meta">R.L.M.A.P.C. Wijethunga, D.M.K. Matheesha, <b>Abdullah Al Noman</b>, K.H.V.T.A. De Silva, Muditha Tissera, Lakmal Rupasinghe<br /><span class="venue">ICAC 2020</span>, 2nd IEEE International Conference on Advancements in Computing</p>
           </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+ 
+  <section class="block" id="cv">
+    <div class="wrap">
+      <h2>CV</h2>
+      <div class="cv">
+        <div>
+          <h3>Education</h3>
+          <ol>
+            <li><span class="what">PhD, Computer Science (Cybersecurity)</span><span class="where">Baylor University, Waco, TX, 2025–present</span></li>
+            <li><span class="what">PhD studies, Computer Engineering</span><span class="where">University of Alabama in Huntsville, 2024–2025, transferred to Baylor</span></li>
+            <li><span class="what">MS, Security and Network Engineering</span><span class="where">Innopolis University, Russia, 2022–2024</span></li>
+            <li><span class="what">BS, Information Technology (Cybersecurity)</span><span class="where">SLIIT, Sri Lanka, 2017–2021</span></li>
+          </ol>
+        </div>
+        <div>
+          <h3>Experience</h3>
+          <ol>
+            <li><span class="what">Graduate Research Assistant</span><span class="where">Baylor University, 2025–present</span></li>
+            <li><span class="what">Graduate Research Assistant</span><span class="where">University of Alabama in Huntsville, 2024–2025</span></li>
+            <li><span class="what">Cybersecurity Engineer, Technical Content</span><span class="where">Wazuh Inc., 2022–2024</span></li>
+            <li><span class="what">Cybersecurity Engineer, R&amp;D</span><span class="where">Quantei Australia, 2019–2022</span></li>
+            <li><span class="what">AWS Cloud Ambassador</span><span class="where">Amazon Web Services, 2019–2020</span></li>
+          </ol>
+        </div>
+        <div>
+          <h3>Honors</h3>
+          <ol>
+            <li><span class="what">Highest Performer</span><span class="where">Wazuh Inc., 2023–2024</span></li>
+            <li><span class="what">Innopolis University Scholarship</span><span class="where">2022–2024</span></li>
+            <li><span class="what">SAARC Scholarship</span><span class="where">2017–2021</span></li>
+          </ol>
+        </div>
+        <div>
+          <h3>Skills</h3>
+          <dl class="skills">
+            <dt>Languages</dt><dd>C, Python, Bash, PowerShell, Swift, x86 assembly</dd>
+            <dt>Machine learning</dt><dd>Deep learning, NLP, reinforcement learning</dd>
+            <dt>Infrastructure</dt><dd>Git, Docker, Kubernetes, Ansible, Terraform, AWS, GCP, Azure, LaTeX</dd>
+          </dl>
         </div>
       </div>
-    </section>
-
-    <!-- CV -->
-    <section id="cv" class="content-section">
-      <p class="section-eyebrow">Background</p>
-      <h2 class="section-title">Curriculum Vitae</h2>
-
-      <div class="cv-block">
-        <div class="cv-block-title">Education</div>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="tl-title">PhD in Computer Science, Cybersecurity</div>
-            <div class="tl-sub">Baylor University · Waco, TX · Aug 2025 – Present</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">PhD in Computer Engineering (Transferred)</div>
-            <div class="tl-sub">University of Alabama in Huntsville · Aug 2024 – May 2025</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">MS in Security and Network Engineering</div>
-            <div class="tl-sub">Innopolis University · Republic of Tatarstan, Russia · 2022 – 2024</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">BS in Information Technology (Cybersecurity)</div>
-            <div class="tl-sub">SLIIT · Colombo, Sri Lanka · 2017 – 2021</div>
-          </div>
-        </div>
+    </div>
+  </section>
+ 
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <div>
+        <p>I'm glad to talk about research collaborations, opportunities in security, or anything where compilers meet security.</p>
+        <a class="mail" href="mailto:Abdullah_Noman1@baylor.edu">Abdullah_Noman1@baylor.edu</a>
+        <ul class="links">
+          <li><a href="https://scholar.google.com/citations?user=tvIFgUEAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a></li>
+          <li><a href="https://github.com/NomanAbdullah" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/nabdullah28" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
       </div>
-
-      <div class="cv-block">
-        <div class="cv-block-title">Experience</div>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="tl-title">Graduate Research Assistant</div>
-            <div class="tl-sub">Baylor University · Aug 2025 – Present</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">Graduate Research Assistant</div>
-            <div class="tl-sub">University of Alabama in Huntsville · Aug 2024 – May 2025</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">Cybersecurity Engineer – Technical Content</div>
-            <div class="tl-sub">Wazuh Inc. · Dec 2022 – Aug 2024</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">Cybersecurity Engineer – R&D</div>
-            <div class="tl-sub">Quantei Australia Pty Ltd · Oct 2019 – Oct 2022</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">AWS Cloud Ambassador</div>
-            <div class="tl-sub">Amazon Web Services · May 2019 – Aug 2020</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cv-block">
-        <div class="cv-block-title">Awards & Honors</div>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="tl-title">Highest Performer</div>
-            <div class="tl-sub">Wazuh Inc. · 2023 – 2024</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">Innopolis University Scholarship</div>
-            <div class="tl-sub">Russia · 2022 – 2024</div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-title">SAARC Scholarship</div>
-            <div class="tl-sub">Sri Lanka · 2017 – 2021</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cv-block">
-        <div class="cv-block-title">Skills</div>
-        <div class="skills-row">
-          <div class="skill-box">
-            <h4>Programming</h4>
-            <p>C, Python, Bash, PowerShell, Swift, Assembly</p>
-          </div>
-          <div class="skill-box">
-            <h4>ML / AI</h4>
-            <p>Deep Learning, Natural Language Processing, Reinforcement Learning</p>
-          </div>
-          <div class="skill-box">
-            <h4>Tools & Cloud</h4>
-            <p>Git, Docker, K8s, Ansible, Terraform, AWS, Google Cloud, Azure, LaTeX</p>
-          </div>
-          <div class="skill-box">
-            <h4>Languages</h4>
-            <p>Bengali (Native) · English (Fluent) · Spanish (Beginner)</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="content-section">
-      <p class="section-eyebrow">Reach Out</p>
-      <h2 class="section-title">Get In Touch</h2>
-
-      <p class="contact-intro">
-        I'm always open to discussing research collaborations, opportunities in cybersecurity, or anything at the intersection of compilers and security. Don't hesitate to reach out.
-      </p>
-
-      <div class="contact-links">
-        <div class="contact-row">
-          <div class="icon">✉</div>
-          <a href="mailto:Abdullah_Noman1@baylor.edu">Abdullah_Noman1@baylor.edu</a>
-        </div>
-        <div class="contact-row">
-          <div class="icon" style="font-size:0.85rem;">GH</div>
-          <a href="https://github.com/NomanAbdullah" target="_blank" rel="noopener">github.com/NomanAbdullah</a>
-        </div>
-        <div class="contact-row">
-          <div class="icon" style="font-size:0.85rem;">in</div>
-          <a href="https://linkedin.com/in/nabdullah28" target="_blank" rel="noopener">linkedin.com/in/nabdullah28</a>
-        </div>
-      </div>
-
-      <div class="contact-form-wrap">
-        <form id="contact-form">
-          <div class="form-row">
-            <div class="field">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="Your name" required />
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="you@example.com" required />
-            </div>
-          </div>
-          <div class="field">
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="Research collaboration, etc." required />
-          </div>
-          <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell me what you're thinking about…" required></textarea>
-          </div>
-          <button type="submit" class="btn-primary">Send Message →</button>
-        </form>
-      </div>
-    </section>
-
-  </main>
-</div>
-
+    </div>
+  </section>
+</main>
+ 
+<footer>
+  <div class="wrap">© <span id="year">2026</span> Abdullah Al Noman, Department of Computer Science, Baylor University</div>
+</footer>
+ 
 <script>
-  // Navigation
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('.content-section');
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      const target = link.dataset.target;
-
-      navLinks.forEach(l => l.classList.remove('active'));
-      sections.forEach(s => s.classList.remove('active'));
-
-      link.classList.add('active');
-      document.getElementById(target).classList.add('active');
+  document.getElementById('year').textContent = new Date().getFullYear();
+ 
+  const demo = document.getElementById('demo');
+  demo.querySelectorAll('.switch button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      demo.dataset.mode = mode;
+      demo.querySelectorAll('.switch button').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      demo.querySelectorAll('[data-for]').forEach(n => { n.hidden = n.dataset.for !== mode; });
     });
   });
-
-  // Form
-  document.getElementById('contact-form').addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.textContent = 'Message sent ✓';
-    btn.style.background = '#0e3224';
-    btn.disabled = true;
-    setTimeout(() => {
-      e.target.reset();
-      btn.textContent = 'Send Message →';
-      btn.style.background = '';
-      btn.disabled = false;
-    }, 3000);
-  });
 </script>
-
 </body>
 </html>
+ 
